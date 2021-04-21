@@ -12,33 +12,32 @@ import java.util.Random;
 
 class Dado
 {
-	//class variables
-	private int dieValue_;
-	public final static int MAX_DIE_VALUE = 6;
-	public final static int MIN_DIE_VALUE = 1;
+	//variables
+	private int valorDado_;
+	public final static int MAX_VALOR_DADO = 6;
+	public final static int MIN_VALOR_DADO = 1;
 	private Random r;	
 	
 	//default constructor
 	Dado()
 	{
-		dieValue_ = MIN_DIE_VALUE;
+		valorDado_ = MIN_VALOR_DADO;
 		r = new Random();
 	}
 	
-	//class methods
-	public void roll()
+	//metodos
+	public void tirar()
 	{
-		dieValue_ = MIN_DIE_VALUE + r.nextInt(MAX_DIE_VALUE);
-		//dieValue_ = (int)(MIN_DIE_VALUE + Math.random() * MAX_DIE_VALUE);
+		valorDado_ = MIN_VALOR_DADO + r.nextInt(MAX_VALOR_DADO);
   	}
 	
-	public int getValue()
+	public int getValor()
 	{
-		return dieValue_;
+		return valorDado_;
 	}
 	
 	public String toString()
 	{
-		return "%d" + dieValue_;
+		return "%d" + valorDado_;
 	}
 }

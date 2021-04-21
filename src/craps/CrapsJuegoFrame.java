@@ -1,12 +1,19 @@
 package craps;
 
 import java.awt.event.*;
+import javax.swing.JFrame;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+/**
+ * @author ItKevinR
+ *
+ * 03:37:05 AM
+ */
 public class CrapsJuegoFrame extends JFrame
 {
+	public JPanel contentPane;
 	private JMenu 	OpcionesJMenu,
 					EstadisticasJMenu,
 					AjustesJMenu,
@@ -38,15 +45,15 @@ public class CrapsJuegoFrame extends JFrame
 						btnGEstilo;
 
 	
-	private final Color[] colorValue = { 	Color.LIGHT_GRAY, 
+	private final Color[] ValDeColor = { 	Color.LIGHT_GRAY, 
 											Color.WHITE, 
 											Color.BLACK, 
 											Color.BLUE, 
 											Color.GREEN, 
 											Color.ORANGE};
 
-	private UIManager.LookAndFeelInfo[] looks;
-	private String[] lookNames;
+	private UIManager.LookAndFeelInfo[] looks; //Estilos
+	private String[] lookNombres; //Nombres
 	
 	private int misPuntos = 0; // Puntos si gana o pierda la primera tirada
 	  
@@ -63,8 +70,8 @@ public class CrapsJuegoFrame extends JFrame
 	private final static int YO_LEVEN = 11;
 	private final static int BOX_CARS = 12;
 
-	private int die1Value;
-	private int die2Value;
+	private int valorDado1;
+	private int valorDado2;
 
 	/****************************************************
 	* Metodo     : Salida
@@ -156,14 +163,14 @@ public class CrapsJuegoFrame extends JFrame
 		tiradas++;
 
 		// tirar cada dado
-		dado1.roll();
-		dado2.roll();
+		dado1.tirar();
+		dado2.tirar();
 			
-		die1Value = dado1.getValue();
-		die2Value = dado2.getValue();
+		valorDado1 = dado1.getValor();
+		valorDado2 = dado2.getValor();
 			
 		// suma de los valores de los dados
-		int sum = dado1.getValue() + dado2.getValue();
+		int sum = dado1.getValor() + dado2.getValor();
 	  
 		return sum; // retorna la suma de los dados
 	} // FIN DEL METODO
@@ -264,7 +271,6 @@ public class CrapsJuegoFrame extends JFrame
 	public CrapsJuegoFrame() 
 	{
 		super("Juego de Craps");
-		getContentPane().setForeground(new Color(0, 0, 0));
 		
 		OpcionesJMenu = OpcionesMenu();
 		EstadisticasJMenu = EstadisticasMenu();
@@ -386,8 +392,8 @@ public class CrapsJuegoFrame extends JFrame
 				{
 					int sum = tirarDado();
 					totJLabel.setText(Integer.toString(sum));
-					dado1JLabel.setText(Integer.toString(die1Value));
-					dado2JLabel.setText(Integer.toString(die2Value));
+					dado1JLabel.setText(Integer.toString(valorDado1));
+					dado2JLabel.setText(Integer.toString(valorDado2));
 					Salida(sum);
 					event.getActionCommand();
 				}
@@ -401,8 +407,8 @@ public class CrapsJuegoFrame extends JFrame
 				{
 					int sum = tirarDado();
 					totJLabel.setText(Integer.toString(sum));
-					dado1JLabel.setText(Integer.toString(die1Value));
-					dado2JLabel.setText(Integer.toString(die2Value));
+					dado1JLabel.setText(Integer.toString(valorDado1));
+					dado2JLabel.setText(Integer.toString(valorDado2));
 					tirarDeNuevo(sum);
 					event.getActionCommand();
 						
@@ -461,8 +467,8 @@ public class CrapsJuegoFrame extends JFrame
 					victorias = 0;
 					juegosTotales = 0;
 					tiradasTotales = 0;
-					die1Value = 0;
-					die2Value = 0;
+					valorDado1 = 0;
+					valorDado2 = 0;
 					tiradas = 0;
 					promTiradas.setEnabled(false);
 					estadisticasTotales.setEnabled(false);
@@ -551,7 +557,7 @@ public class CrapsJuegoFrame extends JFrame
 						JOptionPane.showMessageDialog(null,		"Total patridas jugadas: " 	+ juegosTotales 
 															+ 	"\nTotal partidas ganadas: " 	+ victorias 
 															+ 	"\nPromedio de tiradas por juego: " + promTiros 
-															, "Sumatoria", JOptionPane.PLAIN_MESSAGE);
+															, "Todas las estadisticas", JOptionPane.PLAIN_MESSAGE);
 					}	
 				}
 			);
@@ -618,10 +624,10 @@ public class CrapsJuegoFrame extends JFrame
 		
 		looks = UIManager.getInstalledLookAndFeels();
 		
-		lookNames = new String [looks.length];
+		lookNombres = new String [looks.length];
 		for(int i = 0; i < looks.length; i++)
 		{
-			lookNames[i] = looks[i].getName();
+			lookNombres[i] = looks[i].getName();
 			
 		}
 		
@@ -631,7 +637,7 @@ public class CrapsJuegoFrame extends JFrame
 		
 		for(int c = 0; c < looks.length; c++)
 		{
-			Estilos[c] = new JRadioButtonMenuItem(lookNames[c]);
+			Estilos[c] = new JRadioButtonMenuItem(lookNombres[c]);
 			estiloMenu.add(Estilos[c]);
 			btnGEstilo.add(Estilos[c]);
 			Estilos[c].addItemListener(handleLook);
@@ -656,7 +662,7 @@ public class CrapsJuegoFrame extends JFrame
 			{
 				if(Colores[count].isSelected())
 				{
-					getContentPane().setBackground(colorValue[count]);
+					getContentPane().setBackground(ValDeColor[count]);
 					break;
 				}
 			}
